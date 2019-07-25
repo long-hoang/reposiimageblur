@@ -1,4 +1,4 @@
-# Long Hoang, ImageBlur
+# Long Hoang, ImageBlur2
 
 class Image
   attr_accessor :img_array
