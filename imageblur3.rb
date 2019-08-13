@@ -89,7 +89,7 @@ class Image
     end 
 
 
-    puts
+
 
     # remove any non- existent locations outside the pic 
 
@@ -114,8 +114,7 @@ class Image
     print "Blurred Image: "
     puts
 
-    print list_for_change
-    puts
+
 
 
     list_for_change.each do |loc|
