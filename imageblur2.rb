@@ -42,8 +42,6 @@ class Image
 
     end
 
-    print one_locations
-    puts
 
     # create locations array to make changes
 
@@ -72,18 +70,15 @@ class Image
     end 
 
    
-    puts
+
 
     # remove any non- existent locations outside the pic 
-    print list_for_change
-    puts
 
 
     list_for_change.delete_if {|loc_a| loc_a[0] < 0 || loc_a[1] < 0 || loc_a[0] > img_array.length-1 || loc_a[1] > img_array[0].length-1}
 
 
-    print list_for_change
-    puts
+
 
     # remove any locations that already have a 1 in that space
 
@@ -94,10 +89,10 @@ class Image
     end
 
 
-    print list_for_change
-    puts
+
 
     # make changes to the image array
+    puts
     print "Blurred Image: "
     puts
 
@@ -118,7 +113,7 @@ test_img = Image.new([
   [0, 0, 0, 0, 0, 0, 1],
   [0, 0, 0, 1, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0], 
-  [0, 0, 0, 0, 0, 0, 0]
+  [0, 0, 0, 0, 0, 0, 1]
 
 ])
 test_img.output_image
