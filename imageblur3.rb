@@ -1,4 +1,4 @@
-# Long Hoang, ImageBlur2
+# Long Hoang, ImageBlur3
 
 class Image
   attr_accessor :img_array
@@ -22,7 +22,7 @@ class Image
 
 
 
-  def blur
+  def blur(distance)
 
     # find locations of 1's
     # save location into a list
@@ -42,7 +42,7 @@ class Image
 
     end
 
-    print one_locations
+
     puts
 
     # create locations array to make changes
@@ -55,54 +55,72 @@ class Image
       vert_original = spot[0]
       horiz_original = spot[1]
 
-      # up
-      list_for_change << [vert_original-1,horiz_original]
+      counter = 1;
 
-      # down
-      list_for_change << [vert_original+1,horiz_original]  
-      
-      # left 
-      list_for_change << [vert_original,horiz_original-1]  
+      while counter <= distance
 
-      # right 
-      list_for_change << [vert_original,horiz_original+1]  
 
+          # up
+
+          list_for_change << [vert_original-counter,horiz_original]
+          # down
+          list_for_change << [vert_original+counter,horiz_original] 
+
+          sub_counter =1
+            while sub_counter <= (distance-counter)
+              list_for_change << [vert_original-counter,horiz_original+sub_counter]
+              list_for_change << [vert_original-counter,horiz_original-sub_counter]
+              list_for_change << [vert_original+counter,horiz_original+sub_counter]
+              list_for_change << [vert_original+counter,horiz_original-sub_counter]
+              sub_counter = sub_counter+1             
+            end
+
+ 
+          
+          # left 
+          list_for_change << [vert_original,horiz_original-counter]  
+
+          # right 
+          list_for_change << [vert_original,horiz_original+counter]  
+          counter = counter +1
+      end
 
 
     end 
 
-   
+
     puts
 
     # remove any non- existent locations outside the pic 
-    print list_for_change
-    puts
-
 
     list_for_change.delete_if {|loc_a| loc_a[0] < 0 || loc_a[1] < 0 || loc_a[0] > img_array.length-1 || loc_a[1] > img_array[0].length-1}
 
 
-    print list_for_change
     puts
 
     # remove any locations that already have a 1 in that space
 
-    list_for_change.each do |loc_b|
-      if one_locations.include?(loc_b) == true
-        list_for_change.delete(loc_b)
+    list_for_change.each do |loc|
+      if one_locations.include?(loc) == true
+        list_for_change.delete(loc)
       end
     end
 
 
-    print list_for_change
+
     puts
 
     # make changes to the image array
     print "Blurred Image: "
     puts
 
+    print list_for_change
+    puts
+
+
     list_for_change.each do |loc|
     img_array[loc[0]][loc[1]] = 1
+
     end
 
     self.output_image
@@ -114,12 +132,12 @@ class Image
 end
 
 test_img = Image.new([
-  [1, 0, 0, 0, 0, 0, 1],
-  [0, 0, 0, 0, 0, 0, 1],
-  [0, 0, 0, 1, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0], 
-  [0, 0, 0, 0, 0, 0, 0]
-
+  [1, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 1], 
+  [0, 0, 0, 0, 0, 0, 0],
+  [1, 0, 0, 0, 0, 0, 0]
 ])
 test_img.output_image
-test_img.blur
+test_img.blur(3)
